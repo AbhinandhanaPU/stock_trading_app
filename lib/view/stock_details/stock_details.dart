@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stock_trading_app/controller/stock_controller/stock_controller.dart';
-import 'package:stock_trading_app/view/common_widgets/swow_toast.dart';
+import 'package:stock_trading_app/view/widgets/swow_toast.dart';
 import 'package:stock_trading_app/view/stock_chart/stock_chart.dart';
 
 class StockDetailsScreen extends StatelessWidget {
@@ -12,6 +12,7 @@ class StockDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final StockController stockController = Get.put(StockController());
     final screenSize = MediaQuery.of(context).size;
+    stockController.setActiveTab('1D');
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

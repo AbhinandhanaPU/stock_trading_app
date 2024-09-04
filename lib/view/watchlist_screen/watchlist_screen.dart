@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stock_trading_app/controller/json_controller.dart';
 import 'package:stock_trading_app/controller/stock_controller/stock_controller.dart';
-import 'package:stock_trading_app/view/common_widgets/swow_toast.dart';
+import 'package:stock_trading_app/view/search_screen/search_screen.dart';
 import 'package:stock_trading_app/view/stock_details/stock_details.dart';
+import 'package:stock_trading_app/view/widgets/stock_container.dart';
+import 'package:stock_trading_app/view/widgets/swow_toast.dart';
 
 class WatchListScreen extends StatelessWidget {
   WatchListScreen({super.key});
@@ -35,64 +37,84 @@ class WatchListScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Search container
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.grey[800],
-                boxShadow: const [
-                  BoxShadow(
-                    spreadRadius: 0,
-                    blurRadius: 8,
-                    offset: Offset(0, 2),
-                    color: Color(0xFF097969),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.search,
-                    color: Color(0xFF097969),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search Stock',
-                        hintStyle: TextStyle(
+            GestureDetector(
+              onTap: () async {
+                final allStocks = await jsonController.loadStockData();
+                stockController.searchResults.clear();
+                Get.to(() => SearchScreen(allStocks: allStocks));
+              },
+              child: Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.grey[800],
+                  boxShadow: const [
+                    BoxShadow(
+                      spreadRadius: 0,
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                      color: Color(0xFF097969),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.search,
+                      color: Color(0xFF097969),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Search Stock',
+                        style: TextStyle(
                           color: Colors.grey[500],
                           fontSize: 16,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Your watchlist',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       color: Colors.grey,
                       indent: 10,
+                      endIndent: 10,
                     ),
-                  )
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      stockController.stocks.clear();
+                      stockController.stockBox
+                          .put('stocks', stockController.stocks);
+                    },
+                    child: const Text(
+                      'Remove All',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -129,91 +151,7 @@ class WatchListScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                child: Container(
-                                  width: screenSize.width * 0.94,
-                                  height: screenSize.width / 4,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 25,
-                                    vertical: 20,
-                                  ),
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.grey[850],
-                                    boxShadow: [
-                                      BoxShadow(
-                                        spreadRadius: 0,
-                                        blurRadius: 8,
-                                        offset: const Offset(0, 2),
-                                        color: const Color(0xFF097969)
-                                            .withOpacity(0.7),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            stock['symbol'],
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF097969),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            stock['companyName'],
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey[400],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            '\$${stock['currentPrice'].toStringAsFixed(2)}',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color:
-                                                  stock['percentageChange'] < 0
-                                                      ? Colors.red
-                                                      : Colors.green,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            '${stock['percentageChange'].toStringAsFixed(2)}%',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color:
-                                                  stock['percentageChange'] < 0
-                                                      ? Colors.red
-                                                      : Colors.green,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                child: StockContainer(stock: stock),
                               ),
                               // Remove widget
                               GestureDetector(
@@ -316,82 +254,7 @@ class WatchListScreen extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Container(
-                            width: screenSize.width * 0.94,
-                            height: screenSize.width / 4,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 25,
-                              vertical: 20,
-                            ),
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey[850],
-                              boxShadow: [
-                                BoxShadow(
-                                  spreadRadius: 0,
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 2),
-                                  color:
-                                      const Color(0xFF097969).withOpacity(0.7),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      stock['symbol'],
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF097969),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      stock['companyName'],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey[400],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '\$${stock['currentPrice'].toStringAsFixed(2)}',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: stock['percentageChange'] < 0
-                                            ? Colors.red
-                                            : Colors.green,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      '${stock['percentageChange'].toStringAsFixed(2)}%',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: stock['percentageChange'] < 0
-                                            ? Colors.red
-                                            : Colors.green,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          child: StockContainer(stock: stock),
                         );
                       },
                     );
