@@ -10,10 +10,21 @@ class StockDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final StockController stockController = Get.put(StockController());
+    final screenSize = MediaQuery.of(context).size;
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF097969),
+          title: const Text(
+            'Stock Details',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.black,
         body: Column(
           children: [
             Container(
@@ -25,8 +36,17 @@ class StockDetailsScreen extends StatelessWidget {
                 bottom: 20,
               ),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 228, 249, 246),
+                color: Colors.grey[850],
                 border: Border.all(color: const Color(0xFF097969)),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                    spreadRadius: 0,
+                    blurRadius: 8,
+                    offset: Offset(0, 2),
+                    color: Color(0xFF097969),
+                  ),
+                ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,7 +66,7 @@ class StockDetailsScreen extends StatelessWidget {
                         stock['companyName'],
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          color: Colors.grey[600],
+                          color: Colors.grey[400],
                         ),
                       ),
                     ],
@@ -111,6 +131,57 @@ class StockDetailsScreen extends StatelessWidget {
                 interval: activeTab,
               );
             }),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: screenSize.width / 8,
+                    width: screenSize.width / 2.3,
+                    margin: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF097969),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'ADD',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: screenSize.width / 8,
+                    width: screenSize.width / 2.3,
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.2),
+                      border: Border.all(color: Colors.red),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'REMOVE',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -142,9 +213,10 @@ class TabOption extends StatelessWidget {
           decoration: BoxDecoration(
             color: stockController.activeTab.value == text
                 ? const Color(0xFF097969)
-                : Colors.white,
+                : Colors.grey[850],
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
+              width: 2,
               color: const Color(0xFF097969),
             ),
           ),

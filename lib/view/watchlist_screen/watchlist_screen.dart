@@ -14,6 +14,7 @@ class WatchListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.black, // Set the background color to black
       body: Column(
         children: [
           AppBar(
@@ -36,13 +37,13 @@ class WatchListScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color.fromARGB(255, 241, 235, 235),
-              boxShadow: [
+              color: Colors.grey[800], // Dark grey for search container
+              boxShadow: const [
                 BoxShadow(
                   spreadRadius: 0,
                   blurRadius: 8,
-                  offset: const Offset(0, 2),
-                  color: const Color(0xFF097969).withOpacity(0.2),
+                  offset: Offset(0, 2),
+                  color: Color(0xFF097969),
                 ),
               ],
             ),
@@ -57,12 +58,12 @@ class WatchListScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: TextField(
-                    style: const TextStyle(color: Colors.black), // Text color
+                    style: const TextStyle(color: Colors.white), // Text color
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Search...',
+                      hintText: 'Search Stock',
                       hintStyle: TextStyle(
-                        color: Colors.grey[600],
+                        color: Colors.grey[500], // Hint text color
                         fontSize: 16,
                       ),
                     ),
@@ -76,10 +77,20 @@ class WatchListScreen extends StatelessWidget {
                 future: jsonController.loadStockData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF097969), // Teal color
+                      ),
+                    );
                   } else if (snapshot.hasError) {
                     log('Error: ${snapshot.error}');
-                    return Text('Error: ${snapshot.error}');
+                    return Center(
+                      child: Text(
+                        'Error: ${snapshot.error}',
+                        style:
+                            const TextStyle(color: Colors.white), // Text color
+                      ),
+                    );
                   } else if (snapshot.hasData) {
                     final stocks = snapshot.data!;
                     return ListView.separated(
@@ -117,14 +128,14 @@ class WatchListScreen extends StatelessWidget {
                                   ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
+                                    color: Colors.grey[850], // Dark grey
                                     boxShadow: [
                                       BoxShadow(
                                         spreadRadius: 0,
-                                        blurRadius: 5,
+                                        blurRadius: 8,
                                         offset: const Offset(0, 2),
                                         color: const Color(0xFF097969)
-                                            .withOpacity(0.2),
+                                            .withOpacity(0.7),
                                       ),
                                     ],
                                   ),
@@ -151,7 +162,8 @@ class WatchListScreen extends StatelessWidget {
                                             stock['companyName'],
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              color: Colors.grey[600],
+                                              color: Colors
+                                                  .grey[400], // Light grey
                                             ),
                                           ),
                                         ],
@@ -190,24 +202,25 @@ class WatchListScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              //  remove widget
+                              // Remove widget
                               GestureDetector(
                                 onTap: () {
-                                  // remove function
+                                  // Remove function
                                 },
                                 child: Container(
-                                    width: screenSize.width / 6,
-                                    height: screenSize.width / 4,
-                                    margin: const EdgeInsets.only(
-                                        right: 10, left: 20),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.red,
-                                    ),
-                                    child: const Icon(
-                                      Icons.delete,
-                                      color: Colors.white,
-                                    )),
+                                  width: screenSize.width / 6,
+                                  height: screenSize.width / 4,
+                                  margin: const EdgeInsets.only(
+                                      right: 10, left: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.red,
+                                  ),
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -215,7 +228,12 @@ class WatchListScreen extends StatelessWidget {
                       },
                     );
                   } else {
-                    return const Text('No data found');
+                    return const Center(
+                      child: Text(
+                        'No data found',
+                        style: TextStyle(color: Colors.white), // Text color
+                      ),
+                    );
                   }
                 }),
           ),

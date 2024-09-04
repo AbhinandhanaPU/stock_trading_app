@@ -1,4 +1,4 @@
-import 'dart:convert'; // For JSON decoding
+import 'dart:convert';
 
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:get/get.dart';
