@@ -12,16 +12,17 @@ class WatchListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.black, // Set the background color to black
+      backgroundColor: Colors.black,
       body: Column(
         children: [
           AppBar(
-            backgroundColor: const Color(0xFF097969), // Teal color
-            foregroundColor: Colors.white,
+            foregroundColor: const Color(0xFF097969),
+            backgroundColor: Colors.black,
             title: const Text(
-              'Watchlist',
+              'Stock Watchlist',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -29,7 +30,6 @@ class WatchListScreen extends StatelessWidget {
               ),
             ),
           ),
-
           // Search container
           Container(
             width: double.infinity,
@@ -37,7 +37,7 @@ class WatchListScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: Colors.grey[800], // Dark grey for search container
+              color: Colors.grey[800],
               boxShadow: const [
                 BoxShadow(
                   spreadRadius: 0,
@@ -58,12 +58,12 @@ class WatchListScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: TextField(
-                    style: const TextStyle(color: Colors.white), // Text color
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Search Stock',
                       hintStyle: TextStyle(
-                        color: Colors.grey[500], // Hint text color
+                        color: Colors.grey[500],
                         fontSize: 16,
                       ),
                     ),
@@ -79,7 +79,7 @@ class WatchListScreen extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(
-                        color: Color(0xFF097969), // Teal color
+                        color: Color(0xFF097969),
                       ),
                     );
                   } else if (snapshot.hasError) {
@@ -87,8 +87,7 @@ class WatchListScreen extends StatelessWidget {
                     return Center(
                       child: Text(
                         'Error: ${snapshot.error}',
-                        style:
-                            const TextStyle(color: Colors.white), // Text color
+                        style: const TextStyle(color: Colors.white),
                       ),
                     );
                   } else if (snapshot.hasData) {
@@ -109,9 +108,8 @@ class WatchListScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => StockDetailsScreen(
-                                        stock: stock,
-                                      ),
+                                      builder: (context) =>
+                                          StockDetailsScreen(stock: stock),
                                     ),
                                   );
                                 },
@@ -128,7 +126,7 @@ class WatchListScreen extends StatelessWidget {
                                   ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.grey[850], // Dark grey
+                                    color: Colors.grey[850],
                                     boxShadow: [
                                       BoxShadow(
                                         spreadRadius: 0,
@@ -162,8 +160,7 @@ class WatchListScreen extends StatelessWidget {
                                             stock['companyName'],
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              color: Colors
-                                                  .grey[400], // Light grey
+                                              color: Colors.grey[400],
                                             ),
                                           ),
                                         ],
@@ -231,7 +228,7 @@ class WatchListScreen extends StatelessWidget {
                     return const Center(
                       child: Text(
                         'No data found',
-                        style: TextStyle(color: Colors.white), // Text color
+                        style: TextStyle(color: Colors.white),
                       ),
                     );
                   }

@@ -33,7 +33,7 @@ class StockChart extends StatelessWidget {
     return SizedBox(
       height: 400,
       child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 25, top: 20),
+        padding: const EdgeInsets.only(left: 8, right: 18, top: 15),
         child: LineChart(
           LineChartData(
             gridData: const FlGridData(

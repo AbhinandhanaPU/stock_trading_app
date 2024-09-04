@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 
 class StockController extends GetxController {
@@ -7,9 +6,13 @@ class StockController extends GetxController {
     activeTab.value = tab;
   }
 
-  List<FlSpot> getStockDataPoints(List<double> stockPrices) {
-    return List.generate(stockPrices.length, (index) {
-      return FlSpot(index.toDouble(), stockPrices[index]);
-    });
+  var stocks = <dynamic>[].obs;
+
+  void addStock(dynamic stock) {
+    stocks.add(stock);
+  }
+
+  void removeStock(dynamic stock) {
+    stocks.remove(stock);
   }
 }

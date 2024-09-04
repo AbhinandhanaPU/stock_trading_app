@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:stock_trading_app/view/splash_screen/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
