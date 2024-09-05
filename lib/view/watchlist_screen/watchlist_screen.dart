@@ -6,6 +6,7 @@ import 'package:stock_trading_app/controller/json_controller.dart';
 import 'package:stock_trading_app/controller/stock_controller/stock_controller.dart';
 import 'package:stock_trading_app/view/search_screen/search_screen.dart';
 import 'package:stock_trading_app/view/stock_details/stock_details.dart';
+import 'package:stock_trading_app/view/widgets/page_animation.dart';
 import 'package:stock_trading_app/view/widgets/stock_container.dart';
 import 'package:stock_trading_app/view/widgets/swow_toast.dart';
 
@@ -41,7 +42,10 @@ class WatchListScreen extends StatelessWidget {
               onTap: () async {
                 final allStocks = await jsonController.loadStockData();
                 stockController.searchResults.clear();
-                Get.to(() => SearchScreen(allStocks: allStocks));
+                navigateWithAnimation(
+                  context,
+                  SearchScreen(allStocks: allStocks),
+                );
               },
               child: Container(
                 width: double.infinity,
@@ -143,12 +147,9 @@ class WatchListScreen extends StatelessWidget {
                               // Watchlist items
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
+                                  navigateWithAnimation(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          StockDetailsScreen(stock: stock),
-                                    ),
+                                    StockDetailsScreen(stock: stock),
                                   );
                                 },
                                 child: StockContainer(stock: stock),
@@ -189,7 +190,7 @@ class WatchListScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'Recommandations',
+                    'Recommendations',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -246,12 +247,9 @@ class WatchListScreen extends StatelessWidget {
                         final stock = filteredStocks[index];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                            navigateWithAnimation(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    StockDetailsScreen(stock: stock),
-                              ),
+                              StockDetailsScreen(stock: stock),
                             );
                           },
                           child: StockContainer(stock: stock),

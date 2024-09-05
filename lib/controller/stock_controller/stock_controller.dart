@@ -35,7 +35,7 @@ class StockController extends GetxController {
 
   void searchStocks(List<dynamic> allStocks, String query) {
     if (query.isEmpty) {
-      searchResults.value = allStocks;
+      searchResults.value = [];
     } else {
       searchResults.value = allStocks.where((stock) {
         final symbol = stock['symbol'].toLowerCase();

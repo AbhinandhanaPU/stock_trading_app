@@ -21,7 +21,7 @@ class StockContainer extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[850],
+        color: Colors.grey[900],
         boxShadow: [
           BoxShadow(
             spreadRadius: 0,

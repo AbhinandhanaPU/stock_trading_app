@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stock_trading_app/controller/stock_controller/stock_controller.dart';
-import 'package:stock_trading_app/view/widgets/swow_toast.dart';
 import 'package:stock_trading_app/view/stock_chart/stock_chart.dart';
+import 'package:stock_trading_app/view/widgets/swow_toast.dart';
 
 class StockDetailsScreen extends StatelessWidget {
   final dynamic stock;
@@ -218,77 +218,82 @@ class StockDetailsScreen extends StatelessWidget {
             ),
             const Spacer(),
             Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      if (stockController.stocks.contains(stock)) {
-                        showToastRed(msg: 'Stock is already in the watchlist');
-                      } else if (stockController.stocks.length >= 2) {
-                        showToastRed(
-                            msg:
-                                'Watchlist is full. Remove a stock to add a new one.');
-                      } else {
-                        stockController.stocks.add(stock);
-                        stockController.stockBox
-                            .put('stocks', stockController.stocks);
-                        showToastGreen(msg: 'Stock added successfully!');
-                      }
-                    },
-                    child: Container(
-                      height: screenSize.width / 8,
-                      width: screenSize.width / 2.3,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF097969),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          stockController.stocks.contains(stock)
-                              ? 'ADDED'
-                              : "ADD",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+              () => Padding(
+                padding: const EdgeInsets.only(bottom: 8, top: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (stockController.stocks.contains(stock)) {
+                          showToastRed(
+                              msg: 'Stock is already in the watchlist');
+                        } else if (stockController.stocks.length >= 2) {
+                          showToastRed(
+                              msg:
+                                  'Watchlist is full. Remove a stock to add a new one.');
+                        } else {
+                          stockController.stocks.add(stock);
+                          stockController.stockBox
+                              .put('stocks', stockController.stocks);
+                          showToastGreen(msg: 'Stock added successfully!');
+                        }
+                      },
+                      child: Container(
+                        height: screenSize.width / 8,
+                        width: screenSize.width / 2.3,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF097969),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            stockController.stocks.contains(stock)
+                                ? 'ADDED'
+                                : "ADD",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (stockController.stocks.contains(stock)) {
-                        stockController.stocks.remove(stock);
-                        stockController.stockBox
-                            .put('stocks', stockController.stocks);
-                        showToastGreen(msg: 'Stock removed successfully!');
-                      } else {
-                        showToastRed(msg: 'Stock not found in the watchlist.');
-                      }
-                    },
-                    child: Container(
-                      height: screenSize.width / 8,
-                      width: screenSize.width / 2.3,
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.2),
-                        border: Border.all(color: Colors.red),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'REMOVE',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () {
+                        if (stockController.stocks.contains(stock)) {
+                          stockController.stocks.remove(stock);
+                          stockController.stockBox
+                              .put('stocks', stockController.stocks);
+                          showToastGreen(msg: 'Stock removed successfully!');
+                        } else {
+                          showToastRed(
+                              msg: 'Stock not found in the watchlist.');
+                        }
+                      },
+                      child: Container(
+                        height: screenSize.width / 8,
+                        width: screenSize.width / 2.3,
+                        decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(0.2),
+                          border: Border.all(color: Colors.red),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'REMOVE',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           ],
