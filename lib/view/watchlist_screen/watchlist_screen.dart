@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stock_trading_app/controller/json_controller.dart';
+import 'package:stock_trading_app/controller/json_controller/json_controller.dart';
 import 'package:stock_trading_app/controller/stock_controller/stock_controller.dart';
 import 'package:stock_trading_app/view/search_screen/search_screen.dart';
 import 'package:stock_trading_app/view/stock_details/stock_details.dart';
